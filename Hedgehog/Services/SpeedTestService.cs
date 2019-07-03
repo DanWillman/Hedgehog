@@ -12,9 +12,8 @@ namespace Hedgehog.Services
     {
         private readonly IConfiguration config;
 
-        public SpeedTestService(IConfiguration config)
+        public SpeedTestService()
         {
-            this.config = config;
         }
 
         public TestResult GetData()
@@ -82,7 +81,8 @@ namespace Hedgehog.Services
                 DownSpeed = downSpeed,
                 UpSpeed = upSpeed,
                 ServerName = serverAddress,
-                Latency = latency
+                Latency = latency,
+                ClientName = Environment.MachineName
             };
         }
     }

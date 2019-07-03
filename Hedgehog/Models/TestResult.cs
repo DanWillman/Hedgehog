@@ -7,5 +7,6 @@ namespace Hedgehog.Models
         public string UpSpeed { get; set; }
         public string Latency { get; set; }
         public string ServerName { get; set; }
+        public string ClientName {get;set;}
     }
 }

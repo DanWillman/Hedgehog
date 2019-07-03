@@ -16,10 +16,8 @@ namespace Hedgehog
         public static void Main(string[] args)
         {
             Console.WriteLine("Gotta go fast!");
-            // ServiceRunner sr = new ServiceRunner(new Configuration());
-            // sr.StartMonitoringService();
-
-            
+            ServiceRunner sr = new ServiceRunner();
+            sr.StartMonitoringService();
         }
     }
 }

@@ -11,11 +11,10 @@ namespace Hedgehog.Services
         private readonly ISpeedTestService speedService;
         private readonly ILoggingService logService;
 
-        public ServiceRunner(IConfiguration config, ISpeedTestService speedService, ILoggingService logService)
+        public ServiceRunner()
         {
-            this.config = config;
-            this.speedService = speedService;
-            this.logService = logService;
+            speedService = new SpeedTestService();
+            logService = new LoggingService();
         }
 
         /// <summary>
@@ -33,7 +32,6 @@ namespace Hedgehog.Services
                 catch (System.Exception ex)
                 {
                     Console.WriteLine($"Error encountered - {ex.Message}");
-                    logService.LogError(ex);
                 }
                 Console.WriteLine("Test done, waiting for next test");
                 Thread.Sleep(TimeSpan.FromMinutes(1));

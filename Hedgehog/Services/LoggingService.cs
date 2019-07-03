@@ -9,10 +9,11 @@ namespace Hedgehog.Services
     {
         private readonly string logPath = $"{Environment.CurrentDirectory}/SpeedTests.txt";
         private IConfiguration config;
+        private GoogleSheetService sheetService;
 
-        public LoggingService(IConfiguration config)
+        public LoggingService()
         {
-            this.config = config;
+            sheetService = new GoogleSheetService();
         }
 
         public void LogError(Exception ex)
@@ -26,22 +27,8 @@ namespace Hedgehog.Services
 
         public void LogResults(TestResult data)
         {
-            using (StreamWriter sw = new StreamWriter(logPath, true))
-            {
-                sw.WriteLine($"{DateTime.Now}|{data.Latency}|{data.DownSpeed}|{data.UpSpeed}|{data.ServerName}||");
-            }
+            sheetService.CreateEntry(data);
             Console.WriteLine($"Result Logged|{data.DownSpeed}Mbps down");
-        }
-
-        private void InitFile()
-        {
-            if (!File.Exists(logPath))
-            {
-                using(StreamWriter sw = new StreamWriter(logPath, true))
-                {
-                    sw.WriteLine("LogTime|Latency(ms)|Down Speed(Mbps)|Up Speed(Mbps)|Server Tested|Error Type|Error Message");
-                }
-            }
         }
     }
 }
