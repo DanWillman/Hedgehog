@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Hedgehog
+namespace Hedgehog.Models
 {
     public class TestResult
     {
