@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using OpenQA.Selenium;
@@ -15,7 +11,7 @@ namespace Hedgehog
 {
     public class Program
     {
-        private static readonly string logPath = @"/Users/dan/Desktop/InternetSpeed.txt";
+        private static readonly string logPath = $"{Environment.CurrentDirectory}/SpeedTests.txt";
         public static void Main(string[] args)
         {
             Console.WriteLine("Gotta go fast!");
