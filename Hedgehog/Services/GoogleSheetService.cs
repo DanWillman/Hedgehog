@@ -60,7 +60,7 @@ namespace Hedgehog.Services
             var range = $"{sheet}!A:F";
             var valueRange = new ValueRange();
 
-            IList<object> insertable = new List<object>() {DateTime.Now.ToString("MM/dd/yyyy hh:mm:ss"), dataPoint.Latency, dataPoint.DownSpeed, dataPoint.UpSpeed, dataPoint.ServerName, dataPoint.ClientName};
+            IList<object> insertable = new List<object>() {DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"), dataPoint.Latency, dataPoint.DownSpeed, dataPoint.UpSpeed, dataPoint.ServerName, dataPoint.ClientName};
 
             valueRange.Values = new List<IList<object>> {insertable};
 
