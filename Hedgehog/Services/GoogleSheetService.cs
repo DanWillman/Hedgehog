@@ -9,7 +9,7 @@ using Hedgehog.Models;
 
 namespace Hedgehog.Services
 {
-    public class GoogleSheetService
+    public class GoogleSheetService :IGoogleSheetService
     {
         private readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
         private readonly string ApplicationName = "Hedgehog";
