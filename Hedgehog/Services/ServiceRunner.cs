@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Hedgehog.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Hedgehog.Services
 {
@@ -12,10 +13,11 @@ namespace Hedgehog.Services
         private readonly ILoggingService logService;
         private readonly ConsoleColor defaultConsoleColor;
 
-        public ServiceRunner()
+        public ServiceRunner(IConfiguration config, ISpeedTestService speedService, ILoggingService loggingService)
         {
-            speedService = new SpeedTestService();
-            logService = new LoggingService();
+            this.config = config;
+            logService = loggingService;
+            this.speedService = speedService;
             defaultConsoleColor = Console.ForegroundColor;
         }
 
@@ -38,7 +40,7 @@ namespace Hedgehog.Services
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"Test done, waiting for next test at {DateTime.Now + TimeSpan.FromMinutes(120)}");
                 Console.ForegroundColor = defaultConsoleColor;
-                Thread.Sleep(TimeSpan.FromMinutes(120));
+                Thread.Sleep(TimeSpan.FromMinutes(double.Parse(config["ServiceRunnerDelay"])));
             } while (true);
         }
     }

@@ -8,12 +8,11 @@ namespace Hedgehog.Services
     public class LoggingService : ILoggingService
     {
         private readonly string logPath = $"{Environment.CurrentDirectory}/SpeedTests.txt";
-        private IConfiguration config;
-        private GoogleSheetService sheetService;
+        private IGoogleSheetService sheetService;
 
-        public LoggingService()
+        public LoggingService(IGoogleSheetService googleSheetService)
         {
-            sheetService = new GoogleSheetService();
+            sheetService = googleSheetService;
         }
 
         public void LogError(Exception ex)

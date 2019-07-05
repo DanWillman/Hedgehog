@@ -12,8 +12,9 @@ namespace Hedgehog.Services
     {
         private readonly IConfiguration config;
 
-        public SpeedTestService()
+        public SpeedTestService(IConfiguration config)
         {
+            this.config = config;
         }
 
         public TestResult GetData()
@@ -27,8 +28,8 @@ namespace Hedgehog.Services
             ChromeOptions options = new ChromeOptions();
             options.AddArguments("headless", "no-sandbox");
             //options.AddArgument("--user-agent=Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25");
-            options.BinaryLocation = @"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-            ChromeDriverService cds = ChromeDriverService.CreateDefaultService("/Applications/selenium", "chromedriverv75");
+            options.BinaryLocation = $"{config["ChromeDriver:ChromeBinaryLocation"]}";
+            ChromeDriverService cds = ChromeDriverService.CreateDefaultService($"{config["ChromeDriver:SeleniumLocation"]}", config["ChromeDriver:SeleniumDriverName"]);
 
             using (var driver = new ChromeDriver(cds, options, TimeSpan.FromSeconds(30.0)))
             {
