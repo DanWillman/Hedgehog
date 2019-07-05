@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Hedgehog.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Hedgehog.Services
 {
@@ -11,10 +12,11 @@ namespace Hedgehog.Services
         private readonly ISpeedTestService speedService;
         private readonly ILoggingService logService;
 
-        public ServiceRunner()
+        public ServiceRunner(IConfiguration config, ISpeedTestService speedService, ILoggingService loggingService)
         {
-            speedService = new SpeedTestService();
-            logService = new LoggingService();
+            this.config = config;
+            logService = loggingService;
+            this.speedService = speedService;
         }
 
         /// <summary>
@@ -34,7 +36,7 @@ namespace Hedgehog.Services
                     Console.WriteLine($"Error encountered - {ex.Message}");
                 }
                 Console.WriteLine("Test done, waiting for next test");
-                Thread.Sleep(TimeSpan.FromMinutes(1));
+                Thread.Sleep(TimeSpan.FromMinutes(double.Parse(config["ServiceRunnerDelay"])));
             } while (true);
         }
     }

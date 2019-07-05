@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using Hedgehog.Models;
 using Hedgehog.Models.Configuration;
@@ -33,8 +34,8 @@ namespace Hedgehog
             var isDevelopment = string.IsNullOrWhiteSpace(devEnvironmentVariable) || devEnvironmentVariable.ToLower().Contains("dev");
 
             var builder = new ConfigurationBuilder();
-            builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
+            ConfigureEnivronmentSettings(builder);
+            
             if (isDevelopment)
             {
                 builder.AddUserSecrets<GoogleSheet>();
@@ -58,6 +59,17 @@ namespace Hedgehog
                 .AddTransient<ServiceRunner>()
                 .AddSingleton(Configuration)
                 .BuildServiceProvider();
+        }
+
+        private static void ConfigureEnivronmentSettings(ConfigurationBuilder builder)
+        {
+            builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                builder.AddJsonFile("appsettings.macos.json", optional: true, reloadOnChange: true);
+                Console.WriteLine("Loaded MacOS app setting overrides");
+            }
         }
     }
 }
