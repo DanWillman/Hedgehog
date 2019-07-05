@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Hedgehog
+namespace Hedgehog.Models
 {
     public class TestResult
     {
@@ -7,5 +7,6 @@ namespace Hedgehog
         public string UpSpeed { get; set; }
         public string Latency { get; set; }
         public string ServerName { get; set; }
+        public string ClientName {get;set;}
     }
 }
