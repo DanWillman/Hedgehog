@@ -10,11 +10,13 @@ namespace Hedgehog.Services
         private readonly IConfiguration config;
         private readonly ISpeedTestService speedService;
         private readonly ILoggingService logService;
+        private readonly ConsoleColor defaultConsoleColor;
 
         public ServiceRunner()
         {
             speedService = new SpeedTestService();
             logService = new LoggingService();
+            defaultConsoleColor = Console.ForegroundColor;
         }
 
         /// <summary>
@@ -33,8 +35,10 @@ namespace Hedgehog.Services
                 {
                     Console.WriteLine($"Error encountered - {ex.Message}");
                 }
-                Console.WriteLine("Test done, waiting for next test");
-                Thread.Sleep(TimeSpan.FromMinutes(1));
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"Test done, waiting for next test at {DateTime.Now + TimeSpan.FromMinutes(120)}");
+                Console.ForegroundColor = defaultConsoleColor;
+                Thread.Sleep(TimeSpan.FromMinutes(120));
             } while (true);
         }
     }
