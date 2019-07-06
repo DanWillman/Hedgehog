@@ -45,30 +45,24 @@ namespace Hedgehog.Services
 
                 Console.WriteLine($"Found {e.Text}, clicking...");
                 e.Click();
-                Console.WriteLine($"Clicked {e.Text}, awaiting results for 1 minutes");
-                Thread.Sleep(TimeSpan.FromMinutes(1));
+                DateTime checkTime = DateTime.Now.AddMinutes(2);
+                Console.WriteLine($"Clicked {e.Text}, awaiting results for up to 2 minutes until {checkTime}");                
 
+                do
+                {
+                    upSpeed = driver.FindElements(By.CssSelector("[class='result-data-large number result-data-value upload-speed']")).First().Text;
+                } while (String.IsNullOrWhiteSpace(upSpeed) || checkTime <= DateTime.Now);
+                
                 var downResults = driver.FindElements(By.CssSelector("[class='result-data-large number result-data-value download-speed']"));
                 if (downResults.Count > 0)
                 {
-                    foreach (var down in downResults)
-                        downSpeed += $"{down.Text}";
+                    downSpeed = downResults.First().Text;
+                    
+                    latency = driver.FindElements(By.CssSelector("[class='result-data-large number result-data-value ping-speed']")).First().Text;
+                    serverAddress = driver.FindElementByClassName("hostUrl").Text;
 
                     Console.WriteLine($"Download speed(s) {downSpeed}Mbps");
-
-                    var upResults = driver.FindElements(By.CssSelector("[class='result-data-large number result-data-value upload-speed']"));
-                    
-                    foreach (var up in upResults)
-                        upSpeed += $"{up.Text}";
-
                     Console.WriteLine($"Upload speed(s) {upSpeed}Mbps");
-
-                    var pingResults = driver.FindElements(By.CssSelector("[class='result-data-large number result-data-value ping-speed']"));
-                    
-                    foreach (var ping in pingResults)
-                        latency += $"{ping.Text}";
-
-                    serverAddress = driver.FindElementByClassName("hostUrl").Text;
                     Console.WriteLine($"Tested against {serverAddress}");
                 }
                 else
