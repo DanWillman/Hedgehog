@@ -35,7 +35,9 @@ namespace Hedgehog.Services
                 }
                 catch (System.Exception ex)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Error encountered - {ex.Message}");
+                    Console.ForegroundColor = defaultConsoleColor;
                 }
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine($"Test done, waiting for next test at {DateTime.Now + TimeSpan.FromMinutes(120)}");
