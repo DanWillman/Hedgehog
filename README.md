@@ -9,6 +9,11 @@ Results include: TimeStamp, Latency(ms), Down Speed(Mbps), Up Speed(Mbps), Test 
 With the data loaded to a google sheet, it's trivial to create charts and graphs to help visualize your data:
 ![Chart Sample](https://i.imgur.com/UoUc8RH.png)
 
+The default polling time is 2 hours, this can be adjusted in `appsettings.json` to suit your needs
+
+### Danger Will Robinson
+If you're like me and on a data cap, be careful with how quickly you configure your polling to take place. I initially started out with 2 minutes for testing and forgot to turn it off before going to bed, it ran through 50+ GB of data overnight. 2 Hours works for me, find one that works for you. 
+
 ## Setting up OAuth for Google Sheets
 I followed this [blog](https://www.twilio.com/blog/2017/03/google-spreadsheets-and-net-core.html) to setup google sheet authentication. It's fairly straight forward, once you have your credentials json file, you can add it to user secrets. 
 
